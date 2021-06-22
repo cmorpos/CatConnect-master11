@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}
+Adoption Page
+{% endblock %}
+{% block content %}
+
+<div class="row" style="margin-top:20px; margin-left:20px">
+   <div class="col-8">
+      <h2>Cats up for Adoption</h2>
+      <br>
+      <table class="table table-hover table-dark">
+         <thead>
+            <tr>
+               <!--Your Columns HERE-->
+               <th scope="col">ID</th>
+               <th scope="col">Name</th>
+               <th scope="col">Age</th>
+               <th scope="col">Breed</th>
+               <th scope="col">Options</th>
+            </tr>
+         </thead>
+         <tbody>
+            <!--Your Rows inside the table HERE:-->
+            {% for cat in cats %}
+            {% include 'includes/items_modals.html' %}
+            <tr>
+               <td>{{ cat.id }}</td>
+               <td>{{ cat.name }}</td>
+               <td>{{ cat.age }}</td>
+               <td>{{ cat.breed }}</td>
+               <td>
+                  <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{ cat.id }}">More Info</button>
+                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-AdoptConfirm-{{ cat.id }}">Adopt this cat</button>
+               </td>
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </div>
+   <div class="col-4">
+      <h2>Adopted Cats</h2>
+      <br>
+      <div class="row">
+         {% for owned_cat in owned_cats %}
+         {% include 'includes/owned_cats_modals.html' %}
+         <div class="col-md-6">
+            <div style="margin-bottom: 5px" class="card text-center bg-dark">
+                      <div class="card-body">
+                          <h5 class="card-title">{{ owned_cat.name }}</h5>
+                          <button type="button" class="btn btn-outline-danger" style="margin-bottom: 5px"
+                                  data-toggle="modal" data-target="#Modal-CancelAdoptConfirm-{{ owned_cat.id }}">
+                              Cancel Adoption
+                          </button>
+                          <p class="card-text"><strong>
+                              Age: {{ owned_cat.age }}
+                             <br>
+                              Breed: {{ owned_cat.breed }}
+                          </strong></p>
+                      </div>
+            </div>
+         </div>
+         {% endfor %}
+      </div>
+   </div>
+</div>
+{% endblock %}
